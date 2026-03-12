@@ -1,0 +1,24 @@
+{
+  "name": "querygit",
+  "version": "1.0.0",
+  "description": "Ask questions about your git repository using natural language.",
+  "homepage": "https://github.com/bereilhp/querygit#readme",
+  "bugs": {
+    "url": "https://github.com/bereilhp/querygit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bereilhp/querygit.git"
+  },
+  "license": "MIT",
+  "author": "bereilhp",
+  "keywords": ["git", "cli", "ai", "developer-tools", "github"],
+  "type": "module",
+  "bin": {
+    "querygit": "./src/index.js"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
