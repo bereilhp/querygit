@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 
 const args = process.argv.slice(2);
 const question = args.join(" ");
@@ -37,20 +37,44 @@ async function askGit(question) {
   return data.choices[0].message.content.trim();
 }
 
+function tokenize(cmd) {
+  const tokens = [];
+  const re = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
+  let m;
+  while ((m = re.exec(cmd))) {
+    tokens.push(m[1] ?? m[2] ?? m[0]);
+  }
+  return tokens;
+}
+
 function runGit(cmd) {
-  if (!cmd.trim().startsWith("git ")) {
+  const parts = tokenize(cmd.trim());
+
+  if (parts[0] !== "git") {
     return "Error: Only git commands are allowed";
   }
-  try {
-    return execSync(cmd, { encoding: "utf-8", stdio: "pipe" });
-  } catch (e) {
-    return e.stdout || e.stderr || "No results found";
-  }
+
+  const result = spawnSync("git", parts.slice(1), {
+    encoding: "utf-8",
+    stdio: "pipe",
+  });
+
+  return result.stdout || result.stderr || "No results found";
 }
 
 const gitCmd = await askGit(question);
-console.log(`\n> ${gitCmd}\n`);
-console.log("============================================================");
-console.log(runGit(gitCmd));
-console.log("============================================================");
-console.log(`\nModel: llama3.1-8b (Cerebras)\n`);
+const result = runGit(gitCmd);
+
+console.log();
+console.log("  Model");
+console.log("  -------");
+console.log("  llama3.1-8b (Cerebras)");
+console.log();
+console.log("  Command");
+console.log("  -------");
+console.log(`  ${gitCmd}`);
+console.log();
+console.log("  Result");
+console.log("  -------");
+result.trimEnd().split("\n").forEach(line => console.log(`  ${line}`));
+console.log();
