@@ -1,6 +1,6 @@
 {
   "name": "querygit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ask questions about your git repository using natural language.",
   "homepage": "https://github.com/bereilhp/querygit#readme",
   "bugs": {

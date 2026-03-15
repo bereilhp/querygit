@@ -14,8 +14,26 @@ npm install -g querygit
 export CEREBRAS_API_KEY=your_api_key
 ```
 
+>Note: The model is hardcoded to `llama3.1-8b` via Cerebras API.
+
 ## Usage
 
 ```bash
 querygit "show me the last commit message"
+```
+
+## Output
+
+```
+Model
+-------
+llama3.1-8b (Cerebras)
+
+Command
+-------
+git log -1 --format=%s
+
+Result
+-------
+Release v1.0.2
 ```
