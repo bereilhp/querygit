@@ -1,6 +1,6 @@
 # querygit
 
-Ask questions about your git repository using natural language.
+Use natural language to run git.
 
 ## Install
 
